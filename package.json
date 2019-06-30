@@ -3,5 +3,13 @@
   "version": "0.0.1",
   "description": "Generate a grid for crossword. Grid can be show",
   "main": "dist/index.js",
-  "types": "dist/index.d.ts"
+  "types": "dist/index.d.ts",
+  "devDependencies": {
+    "typescript": "^3.5.2"
+  },
+   "scripts": {
+    "start": "npm run build:live",
+    "build": "tsc -p .",
+    "build:live": "nodemon --watch 'src/**/*.ts' --exec 'ts-node' src/index.ts"
+  }
 }
