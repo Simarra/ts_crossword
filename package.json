@@ -1,0 +1,7 @@
+{
+  "name": "ts_crossword",
+  "version": "0.0.1",
+  "description": "Generate a grid for crossword. Grid can be show",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts"
+}
