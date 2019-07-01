@@ -14,6 +14,15 @@ export class Grid {
         this.generate_board();
     }
 
+    public show_grid_in_console() {
+        // print the grid in console.
+         for (let row of this.board) {
+            let tmp_array = row.map(x => x.letter);
+        console.log(tmp_array.join(" | "));
+         }
+
+    };
+
     protected generate_board() {
         // Generate the board structure
         let row_it: number;
@@ -25,7 +34,6 @@ export class Grid {
             }
             this.board.push(tmp_row);
         }
-
     }
 
 

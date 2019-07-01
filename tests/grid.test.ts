@@ -13,4 +13,9 @@ describe("test Board generation", () => {
     expect(row.length).toEqual(5);
 }
   });
+  test("Test show grid", () => {
+    let grid = new Grid(5, 6, test_words );
+    grid.show_grid_in_console();
+
+  });
 });
