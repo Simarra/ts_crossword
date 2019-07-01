@@ -1,4 +1,4 @@
-import { WordListDescr } from '../src/words'
+import { WordListDescr } from '../src/words';
 
 describe("test words class", () => {
   test("Test word result is not empty", () => {
