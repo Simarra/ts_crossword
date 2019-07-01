@@ -6,6 +6,6 @@
     "outDir": "./dist"
   },
   "include": [
-    "src/**/*"
+    "src/**/*", "tests/words.test.ts"
   ]
 }
