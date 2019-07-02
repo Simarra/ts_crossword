@@ -1,8 +1,9 @@
 import { Cell } from './cell';
 import { WordListDescr } from './words';
+import { random_int, shuffle } from './tools'
 
 
-export class position {
+export class Position {
     // interface used to standardise cell position.
     row: number;
     col: number;
@@ -27,7 +28,7 @@ export class Grid {
     //       If no, try next direction
     //       If no, Do the same on next cell
     //       If fail, go to next iteration
-        //       If all cells failed, raise
+    //       If all cells failed, raise
     // Go to next word
     ITERATIONS: number = 50;
     nb_col: number;
@@ -44,13 +45,23 @@ export class Grid {
     public fill_board() {
         // Core method wich gen letters on the board.
 
-        
+
         // Iterate
+        for (let iter = 0; iter < this.ITERATIONS; iter++) {
 
-        // Generate the Board
-        this.generate_board()
+            // Generate the Board
+            this.generate_board()
 
-
+            // Iterate over words list
+            for (let word_row of this.words.word_desc_array) {
+                let word = word_row[0];
+                // get random position
+                let initial_position = this.get_random_position();
+                // clone the position
+                let current_position = new Position(initial_position.row, initial_position.col)
+                let direction_array = this.get_randomized_directions();
+            };
+        };
     };
 
 
@@ -60,7 +71,6 @@ export class Grid {
             let tmp_array = row.map(x => x.letter);
             console.info(tmp_array.join(" | "));
         }
-
     };
 
     public generate_board(): void {
@@ -77,7 +87,7 @@ export class Grid {
     };
 
 
-    public get_cell(cell_pos: position): Cell {
+    public get_cell(cell_pos: Position): Cell {
         let result = this.board[cell_pos.row][cell_pos.col];
         return result;
     };
@@ -90,11 +100,42 @@ export class Grid {
         }
     };
 
-    private format_pos(row: number, col: number): position {
-        let result = new position(row, col);
+    private format_pos(row: number, col: number): Position {
+        let result = new Position(row, col);
         return result;
     };
 
+    private get_random_position(): Position {
+        let min = 0;
+        let col_max = this.nb_col;
+        let row_max = this.nb_row;
 
+        //ugly
+        let rd_row = random_int(min, row_max);
+        let rd_col = random_int(min, col_max);
 
+        let result = new Position(rd_row, rd_col);
+        return result;
+    };
+
+    private iterate_over_grid(position: Position): Position {
+        // Method used to iterate on the grid.
+
+        if (position.col >= this.nb_col){
+            position.col = 0;
+            position.row += 1;
+        } else if () {
+            // TODO : Finish it.
+
+        }
+        
+
+        return position;
+    };
+
+    private get_randomized_directions(): Array<string> {
+        // Get suffled directions.
+        let dirs = shuffle(['left', 'up', 'wright', 'down']);
+        return dirs;
+    };
 }
