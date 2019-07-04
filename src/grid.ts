@@ -118,18 +118,18 @@ export class Grid {
         return result;
     };
 
-    private iterate_over_grid(position: Position): Position {
+    private get_next_position_on_grid(position: Position): Position {
         // Method used to iterate on the grid.
 
-        if (position.col >= this.nb_col){
+        if ((position.col === this.nb_col) && (position.row === this.nb_row)){
+            position.col = 0;
+            position.row = 0;
+        } else if (position.col === this.nb_col) {
             position.col = 0;
             position.row += 1;
-        } else if () {
-            // TODO : Finish it.
-
+        } else {
+            position.col += 1;
         }
-        
-
         return position;
     };
 
