@@ -37,7 +37,7 @@ export class Grid {
     board: Array<Array<Cell>>;
 
     constructor(nb_row: number, nb_col: number, words: WordListDescr) {
-        this.nb_col = nb_col -1;
+        this.nb_col = nb_col - 1;
         this.nb_row = nb_row - 1;
         this.words = words;
     }
@@ -61,27 +61,34 @@ export class Grid {
                 let word_written: boolean = false;
                 // Examine current position.
                 while (current_position != initial_position) {
+                    if (word_written === true){
+                        break;
+                    }
                     let first_cell_match = this.check_cell_letter_match(current_position, word[0]);
                     if (first_cell_match === true) {
                         for (let direction of this.get_randomized_directions()) {
                             if (word_written === false) {
                                 for (let letter of word.slice(1)) {
-                                    try {
-                                        word_written = true;
-                                        let pos: Position = this.get_next_position(current_position, direction);
+                                    word_written = true;
+                                    let pos: Position = this.get_next_position(current_position, direction);
+                                    if (pos.col != -1) {
                                         let match: boolean = this.check_cell_letter_match(pos, letter);
                                         if (match === false) {
                                             word_written = false;
+                                            current_position = this.get_next_position_on_grid(current_position);
                                             break;
                                         };
-                                    }
-                                    catch (RangeError) {
+                                    } else {
                                         word_written = false;
+                                        current_position = this.get_next_position_on_grid(current_position);
                                         break;
+
                                     };
+
                                 };
-                                if (word_written === true){
-                                    this.write_word(word, current_position, direction, +word_idx);
+                                if (word_written === true) {
+                                    word_written = true;
+                                    this.write_word(word, current_position, direction, +word_idx); // BUG HERE IDX OUT OF RANGE.
                                     break;
 
                                 };
@@ -114,7 +121,7 @@ export class Grid {
     };
 
 
-    public export_to_json(){
+    public export_to_json() {
         // Export to JSON 
     };
 
@@ -137,18 +144,12 @@ export class Grid {
         return result;
     };
 
-    /*     protected get_next_cell(pos: Position, direction: string): Cell {
-            // method used to move one cell on a direction.
-            if (direction === "left") {
-                this.get_left_position;
-            }
-        }; */
 
 
     protected get_right_position(position: Position) {
         let pos = new Position(position.row, position.col)
         if (pos.col === this.nb_col) {
-            throw new RangeError("EOL reached.")
+            pos.col = -1;
         } else { pos.col += 1 }
         return pos
     };
@@ -156,7 +157,7 @@ export class Grid {
     protected get_left_position(position: Position) {
         let pos = new Position(position.row, position.col)
         if (pos.col === 0) {
-            throw new RangeError("EOL reached.")
+            pos.col = -1;
         } else { pos.col -= 1 }
         return pos
     };
@@ -164,7 +165,7 @@ export class Grid {
     protected get_upper_position(position: Position) {
         let pos = new Position(position.row, position.col)
         if (pos.row === 0) {
-            throw new RangeError("EOL reached.")
+            pos.col = -1;
         } else { pos.row -= 1 }
         return pos
     };
@@ -172,7 +173,7 @@ export class Grid {
     protected get_bottom_position(position: Position) {
         let pos = new Position(position.row, position.col)
         if (pos.row === this.nb_row) {
-            throw new RangeError("EOL reached.")
+            pos.col = -1;
         } else { pos.row += 1 }
         return pos
     };
