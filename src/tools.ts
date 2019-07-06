@@ -1,5 +1,5 @@
 export function random_int(min_nb: number, max_nb: number) {
-    let result = Math.random() * (+max_nb - +min_nb) + +min_nb;
+    let result = Math.floor(Math.random() * (+max_nb - +min_nb) + +min_nb);
     return result;
 }
 

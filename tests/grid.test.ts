@@ -51,7 +51,7 @@ describe("test Board generation", () => {
   test("test get next row new positions", () => {
     let grid = new TestClass(5, 6, test_words);
     grid.generate_board();
-    let pos = new Position(2,6)
+    let pos = new Position(2,5)
     let result = grid.get_next_position_on_grid(pos)
     let expected_pos = new Position(3,0)
     expect(result).toEqual(expected_pos)
@@ -59,7 +59,7 @@ describe("test Board generation", () => {
   test("test get last  row new positions", () => {
     let grid = new TestClass(5, 6, test_words);
     grid.generate_board();
-    let pos = new Position(5,6)
+    let pos = new Position(4,5)
     let result = grid.get_next_position_on_grid(pos)
     let expected_pos = new Position(0,0)
     expect(result).toEqual(expected_pos)

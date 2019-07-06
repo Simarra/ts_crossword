@@ -37,8 +37,8 @@ export class Grid {
     board: Array<Array<Cell>>;
 
     constructor(nb_row: number, nb_col: number, words: WordListDescr) {
-        this.nb_col = nb_col;
-        this.nb_row = nb_row;
+        this.nb_col = nb_col -1;
+        this.nb_row = nb_row - 1;
         this.words = words;
     }
 
@@ -113,13 +113,18 @@ export class Grid {
         }
     };
 
+
+    public export_to_json(){
+        // Export to JSON 
+    };
+
     public generate_board(): void {
         // Generate the board structure
         let row_it: number;
         this.board = [];
-        for (let row_it = 0; row_it < this.nb_row; row_it++) {
-            let tmp_row = new Array(this.nb_col);
-            for (let col_it = 0; col_it < this.nb_col; col_it++) {
+        for (let row_it = 0; row_it < this.nb_row + 1; row_it++) {
+            let tmp_row = new Array(this.nb_col + 1);
+            for (let col_it = 0; col_it < this.nb_col + 1; col_it++) {
                 tmp_row[col_it] = new Cell();
             }
             this.board.push(tmp_row);
@@ -217,7 +222,7 @@ export class Grid {
 
     protected get_randomized_directions(): Array<string> {
         // Get suffled directions.
-        let dirs = shuffle(['left', 'up', 'wright', 'down']);
+        let dirs = shuffle(['left', 'up', 'right', 'down']);
         return dirs;
     };
 
