@@ -44,8 +44,6 @@ export class Grid {
 
     public fill_board() {
         // Core method wich gen letters on the board.
-
-
         // Iterate
         for (let iter = 0; iter < this.ITERATIONS; iter++) {
 
@@ -60,31 +58,43 @@ export class Grid {
                 let initial_position = this.get_random_position();
                 // Check letter on initial cell.
                 let current_position = this.get_next_position_on_grid(initial_position);
+                let word_written: boolean = false;
                 // Examine current position.
                 while (current_position != initial_position) {
                     let first_cell_match = this.check_cell_letter_match(current_position, word[0]);
                     if (first_cell_match === true) {
                         for (let direction of this.get_randomized_directions()) {
-                            for (let letter of word.slice(1)) {
-                                try {
-                                    let pos: Position = this.get_next_position(current_position, direction);
-                                    let match: boolean = this.check_cell_letter_match(pos, letter);
-                                    if (match === false) {
+                            if (word_written === false) {
+                                for (let letter of word.slice(1)) {
+                                    try {
+                                        word_written = true;
+                                        let pos: Position = this.get_next_position(current_position, direction);
+                                        let match: boolean = this.check_cell_letter_match(pos, letter);
+                                        if (match === false) {
+                                            word_written = false;
+                                            break;
+                                        };
+                                    }
+                                    catch (RangeError) {
+                                        word_written = false;
                                         break;
                                     };
-                                }
-                                catch (RangeError) {
-                                    break;
                                 };
-                                // if iteration is over it is a success
-                                // so we can write the result and then exit loop.
-                                this.write_word(word, current_position, direction, 10) // TODO: set Idx. 
+                                if (word_written === true){
+                                    this.write_word(word, current_position, direction, +word_idx);
+                                    break;
+
+                                };
+                            } else {
+                                break
                             };
-                        };
-                    } else {
-                        let current_position = this.get_next_position_on_grid(initial_position);
-                        break // exit loop if position not match.
+                        }
                     };
+                };
+                if (word_written === false) {
+                    // if a word failed to write, go to the next iteration.
+                    break;
+
                 };
 
 
@@ -219,7 +229,7 @@ export class Grid {
         cell.idx = idx;
         cell.letter = word[0];
         cell.direction = direction;
-        let pos = new Position(first_cell_pos.row, first_cell_pos.col )
+        let pos = new Position(first_cell_pos.row, first_cell_pos.col)
         // write other elts.
         for (let letter of word.slice(1)) {
             pos = this.get_next_position(pos, direction);
