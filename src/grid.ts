@@ -185,8 +185,11 @@ export class Grid {
         return pos
     };
 
-    protected check_cell_letter_match(position: Position, letter: string) {
+    protected check_cell_letter_match(position: Position, letter: string, first_cell: boolean = false) {
         let cell = this.get_cell(position);
+        if ((first_cell === true) && (cell.direction != null)) {
+            return false
+        };
         if ((cell.letter === letter) || (cell.letter == null)) {
             return true
         } else {
