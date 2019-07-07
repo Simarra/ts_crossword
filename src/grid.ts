@@ -48,7 +48,9 @@ export class Grid {
         for (let iter = 0; iter < this.ITERATIONS; iter++) {
 
             // Generate the Board
-            this.generate_board()
+            this.generate_board();
+            
+            let word_written: Boolean;
 
             // Iterate over words list
             for (let word_idx in this.words.word_desc_array) {
@@ -58,19 +60,20 @@ export class Grid {
                 let initial_position = this.get_random_position();
                 // Check letter on initial cell.
                 let current_position = this.get_next_position_on_grid(initial_position);
-                let word_written: boolean = false;
+                word_written = false;
                 // Examine current position.
                 while (current_position != initial_position) {
-                    if (word_written === true){
+                    if (word_written === true) {
                         break;
                     }
                     let first_cell_match = this.check_cell_letter_match(current_position, word[0]);
                     if (first_cell_match === true) {
                         for (let direction of this.get_randomized_directions()) {
                             if (word_written === false) {
+                                let pos: Position = new Position(current_position.row, current_position.col);
                                 for (let letter of word.slice(1)) {
                                     word_written = true;
-                                    let pos: Position = this.get_next_position(current_position, direction);
+                                    pos = this.get_next_position(pos, direction);
                                     if (pos.col != -1) {
                                         let match: boolean = this.check_cell_letter_match(pos, letter);
                                         if (match === false) {
@@ -87,8 +90,7 @@ export class Grid {
 
                                 };
                                 if (word_written === true) {
-                                    word_written = true;
-                                    this.write_word(word, current_position, direction, +word_idx); // BUG HERE IDX OUT OF RANGE.
+                                    this.write_word(word, current_position, direction, +word_idx);
                                     break;
 
                                 };
@@ -96,6 +98,8 @@ export class Grid {
                                 break
                             };
                         }
+                    } else {
+                        current_position = this.get_next_position_on_grid(current_position);
                     };
                 };
                 if (word_written === false) {
@@ -107,8 +111,11 @@ export class Grid {
 
 
             };
+            if (word_written === true) {
+                break;
+            }; // if all word written, exit the main loop.
         };
-        throw new Error("Board couldn't be filled using ")
+        // throw new Error("Board couldn't be filled.")
     };
 
 

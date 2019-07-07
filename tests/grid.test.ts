@@ -29,7 +29,7 @@ class TestClass extends Grid {
 };
 
 var test_words = new WordListDescr(['maison', 'table'], ['lieu ou habiter', 'surface plate']);
-test_words.generate_word_descr_array();
+// test_words.generate_word_descr_array();
 
 describe("test Board generation", () => {
   test("Test grid len ", () => {
@@ -105,11 +105,13 @@ describe("test Board generation", () => {
   test("Test letter match cell", () => {
     let grid = new Grid(5, 6, test_words);
     grid.generate_board();
+    grid.show_grid_in_console();
     
 
   });
   test("test fill board", () => {
-    let grid = new Grid(5, 6, test_words);
+  var test_words_bigger = new WordListDescr(['maison', 'table', 'yo'], ['lieu ou habiter', 'surface plate', 'le cool']);
+    let grid = new Grid(5, 6, test_words_bigger);
     grid.generate_board();
     grid.fill_board();
 
