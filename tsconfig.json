@@ -1,11 +1,11 @@
 {
   "compilerOptions": {
     "module": "commonjs",
-    "target": "es5",
+    "target": "es6",
     "declaration": true,
     "outDir": "./dist"
   },
   "include": [
-    "src/**/*", "tests/words.test.ts"
+    "src/**/*" //, "tests/words.test.ts"
   ]
 }
