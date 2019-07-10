@@ -1,2 +1,1 @@
-import { generate_crossword } from "./controler";
-
+export { generate_crossword } from "./controler";
