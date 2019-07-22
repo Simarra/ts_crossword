@@ -99,12 +99,14 @@ describe("test Board generation", () => {
   test("Test show grid", () => {
     let grid = new Grid(5, 6, test_words);
     grid.generate_board();
+    grid.fill_board();
     grid.show_grid_in_console();
 
   });
   test("Test letter match cell", () => {
-    let grid = new Grid(5, 6, test_words);
+    let grid = new Grid(8, 9, test_words);
     grid.generate_board();
+    grid.fill_board();
     grid.show_grid_in_console();
     
 
