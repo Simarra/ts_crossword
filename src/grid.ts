@@ -49,7 +49,7 @@ export class Grid {
 
             // Generate the Board
             this.generate_board();
-            
+
             let word_written: Boolean;
 
             // Iterate over words list
@@ -131,6 +131,18 @@ export class Grid {
     public export_to_json() {
         // Export to JSON 
     };
+
+    public get_array_of_items(item_to_get: string) {
+        // Extract cell content and return an array usable.
+        // item_to_get: letter, idx, direction 
+        let tmp_array = [];//: Array<Array<string>>;
+        for (let row of this.board) {
+            let tmp_row = row.map(x => x[item_to_get]);
+            tmp_array.push(tmp_row)
+        };
+        return tmp_array;
+    };
+
 
     public generate_board(): void {
         // Generate the board structure
