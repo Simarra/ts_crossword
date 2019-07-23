@@ -116,8 +116,12 @@ describe("test Board generation", () => {
     let grid = new Grid(5, 6, test_words_bigger);
     grid.generate_board();
     grid.fill_board();
-
-
-
+  });
+  test("get array of idx", () => {
+  var test_words_bigger = new WordListDescr(['maison', 'table', 'yo'], ['lieu ou habiter', 'surface plate', 'le cool']);
+    let grid = new Grid(5, 6, test_words_bigger);
+    grid.generate_board();
+    grid.fill_board();
+    let res = grid.get_array_of_items("idx");
   });
 });
