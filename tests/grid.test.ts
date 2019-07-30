@@ -124,4 +124,13 @@ describe("test Board generation", () => {
     grid.fill_board();
     let res = grid.get_array_of_items("idx");
   });
+  test("crossing words", () => {
+  var test_words_bigger = new WordListDescr(['son', 'olive', 'seul', 'oeil', 'sass'], ['zigoto', 'lieu ou habiter', 'surface plate', 'le cool', 'le son']);
+    for (let i = 0; i < 150; i++) {
+    let grid = new Grid(5, 6, test_words_bigger);
+    grid.generate_board();
+    grid.fill_board();
+    grid.show_grid_in_console()
+  }}
+  );
 });

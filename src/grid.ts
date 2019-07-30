@@ -64,9 +64,11 @@ export class Grid {
                 // Examine current position.
                 while (current_position != initial_position) {
                     if (word_written === true) {
+                        // the word has been written. Exit loop.
                         break;
                     }
-                    let first_cell_match = this.check_cell_letter_match(current_position, word[0]);
+                    let first_cell_match = this.check_cell_letter_match (current_position, word[0], true);
+                    // first cell can not having already and idx.
                     if (first_cell_match === true) {
                         for (let direction of this.get_randomized_directions()) {
                             if (word_written === false) {
@@ -75,6 +77,7 @@ export class Grid {
                                     word_written = true;
                                     pos = this.get_next_position(pos, direction);
                                     if (pos.col != -1) {
+                                        // TODO: PUT HERE check for first letter.
                                         let match: boolean = this.check_cell_letter_match(pos, letter);
                                         if (match === false) {
                                             word_written = false;
@@ -90,7 +93,14 @@ export class Grid {
 
                                 };
                                 if (word_written === true) {
-                                    this.write_word(word, current_position, direction, +word_idx);
+                                    // TODO: FIX THIS. THE UGGLIEST THING EVER DONE.
+                                    // This is done because couldnt resolve bug of idx overwitten.
+                                    try {
+                                        this.write_word(word, current_position, direction, +word_idx);
+                                    } catch (error) {
+                                        word_written = false;
+                                        
+                                    }
                                     break;
 
                                 };
@@ -100,6 +110,7 @@ export class Grid {
                         }
                     } else {
                         current_position = this.get_next_position_on_grid(current_position);
+                        word_written = false;
                     };
                 };
                 if (word_written === false) {
@@ -107,9 +118,6 @@ export class Grid {
                     break;
 
                 };
-
-
-
             };
             if (word_written === true) {
                 break;
@@ -121,9 +129,13 @@ export class Grid {
 
     public show_grid_in_console(): void {
         // print the grid in console.
+        let res_array: Array<string> = [];
+        let res: string = '';
         for (let row of this.board) {
             let tmp_array = row.map(x => x.letter);
-            console.info(tmp_array.join(" | "));
+            let tmp_str:string = tmp_array.join(" | ");
+            res_array.push(tmp_str);
+        console.log(res_array.join("\n"))
         }
     };
 
@@ -199,7 +211,10 @@ export class Grid {
 
     protected check_cell_letter_match(position: Position, letter: string, first_cell: boolean = false) {
         let cell = this.get_cell(position);
-        if ((first_cell === true) && (cell.direction != null)) {
+        if ((first_cell === true) && (cell.idx)) {
+            console.info('YOLO \n coucou')
+            console.log(cell.letter);
+            console.log(cell.idx)
             return false
         };
         if ((cell.letter === letter) || (cell.letter == null)) {
@@ -254,6 +269,11 @@ export class Grid {
         // Write first cell
         let cell: Cell;
         cell = this.get_cell(first_cell_pos);
+
+        if (cell.idx) {
+            throw new Error("Trying to write index on existing index.")
+        }
+
         cell.idx = idx;
         cell.letter = word[0];
         cell.direction = direction;
