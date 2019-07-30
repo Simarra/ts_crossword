@@ -46,6 +46,7 @@ export class Grid {
         // Core method wich gen letters on the board.
         // Iterate
         for (let iter = 0; iter < this.ITERATIONS; iter++) {
+            console.log(iter);
 
             // Generate the Board
             this.generate_board();
@@ -96,8 +97,6 @@ export class Grid {
                                     // TODO: FIX THIS. THE UGGLIEST THING EVER DONE.
                                     // This is done because couldnt resolve bug of idx overwitten.
                                     this.write_word(word, current_position, direction, +word_idx);
-                                    word_written = false;
-                                        
                                     break;
 
                                 };
@@ -119,6 +118,10 @@ export class Grid {
             if (word_written === true) {
                 break;
             }; // if all word written, exit the main loop.
+            // check that all indexes are presents. If not, iterate again. TODO 
+            if (this.check_idx_are_presents() === false) {
+                word_written = false;
+            }
         };
         // throw new Error("Board couldn't be filled.")
     };
@@ -136,6 +139,30 @@ export class Grid {
         }
     };
 
+
+    public check_idx_are_presents() {
+        let idx_getted: number = 0;
+        let idx_expected: number = this.words.word_desc_array[0].length;
+
+        // Get idx from descr
+        
+
+        // Get idx from board
+        for (let row of this.board) {
+            for (let cell of row) {
+                if (cell["idx"]) {
+                    idx_getted += 1;
+                };
+            }
+        }
+
+        if (idx_getted === idx_expected) {
+            return true
+        } else {
+            return false
+        }
+
+    };
 
     public export_to_json() {
         // Export to JSON 
