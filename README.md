@@ -9,6 +9,11 @@ The script also include a function to export in JSON (in later release) to use i
 Find me on github on: https://github.com/Simarra/ts_crossword
 
 
+Version 1.1.0
+=============
+- Horrible fix for idx overwritting
+
+
 Version 1.0.0
 =============
 - First stable release
