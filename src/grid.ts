@@ -30,7 +30,7 @@ export class Grid {
     //       If fail, go to next iteration
     //       If all cells failed, raise
     // Go to next word
-    ITERATIONS: number = 50;
+    ITERATIONS: number = 500;
     nb_col: number;
     nb_row: number;
     words: WordListDescr;
@@ -68,7 +68,7 @@ export class Grid {
                         // the word has been written. Exit loop.
                         break;
                     }
-                    let first_cell_match = this.check_cell_letter_match (current_position, word[0], true);
+                    let first_cell_match = this.check_cell_letter_match(current_position, word[0], true);
                     // first cell can not having already and idx.
                     if (first_cell_match === true) {
                         for (let direction of this.get_randomized_directions()) {
@@ -116,14 +116,17 @@ export class Grid {
                 };
             };
             if (word_written === true) {
-                break;
-            }; // if all word written, exit the main loop.
-            // check that all indexes are presents. If not, iterate again. TODO 
-            if (this.check_idx_are_presents() === false) {
-                word_written = false;
+                if (this.check_idx_are_presents() === false) {
+                    word_written = false;
+                } else {
+                    break;
+                }
+            };
+            if (word_written === false && iter === this.ITERATIONS) {
+                throw new Error("Board couldn't be filled.");
             }
+            // check that all indexes are presents. If not, iterate again. TODO 
         };
-        // throw new Error("Board couldn't be filled.")
     };
 
 
@@ -133,24 +136,24 @@ export class Grid {
         let res: string = '';
         for (let row of this.board) {
             let tmp_array = row.map(x => x.letter);
-            let tmp_str:string = tmp_array.join(" | ");
+            let tmp_str: string = tmp_array.join(" | ");
             res_array.push(tmp_str);
-        console.log(res_array.join("\n"))
+            console.log(res_array.join("\n"))
         }
     };
 
 
     public check_idx_are_presents() {
         let idx_getted: number = 0;
-        let idx_expected: number = this.words.word_desc_array[0].length;
+        let idx_expected: number = this.words.word_desc_array.length;
 
         // Get idx from descr
-        
+
 
         // Get idx from board
         for (let row of this.board) {
             for (let cell of row) {
-                if (cell["idx"]) {
+                if (cell["idx"] || cell["idx"] === 0 ) {
                     idx_getted += 1;
                 };
             }
