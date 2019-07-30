@@ -46,20 +46,14 @@ export class Grid {
         // Core method wich gen letters on the board.
         // Iterate
         for (let iter = 0; iter < this.ITERATIONS; iter++) {
-            console.log(iter)
 
             // Generate the Board
             this.generate_board();
 
             let word_written: Boolean;
-            let ugly_fail: Boolean = false;
 
             // Iterate over words list
             for (let word_idx in this.words.word_desc_array) {
-                if (ugly_fail == true) {
-                    word_written = false;
-                    break;
-                }
                 let word = this.words.word_desc_array[word_idx][0];
 
                 // get random position
@@ -101,12 +95,9 @@ export class Grid {
                                 if (word_written === true) {
                                     // TODO: FIX THIS. THE UGGLIEST THING EVER DONE.
                                     // This is done because couldnt resolve bug of idx overwitten.
-                                    try {
-                                        this.write_word(word, current_position, direction, +word_idx);
-                                    } catch (error) {
-                                        ugly_fail = true;
+                                    this.write_word(word, current_position, direction, +word_idx);
+                                    word_written = false;
                                         
-                                    }
                                     break;
 
                                 };
