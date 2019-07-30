@@ -46,14 +46,20 @@ export class Grid {
         // Core method wich gen letters on the board.
         // Iterate
         for (let iter = 0; iter < this.ITERATIONS; iter++) {
+            console.log(iter)
 
             // Generate the Board
             this.generate_board();
 
             let word_written: Boolean;
+            let ugly_fail: Boolean = false;
 
             // Iterate over words list
             for (let word_idx in this.words.word_desc_array) {
+                if (ugly_fail == true) {
+                    word_written = false;
+                    break;
+                }
                 let word = this.words.word_desc_array[word_idx][0];
 
                 // get random position
@@ -98,7 +104,7 @@ export class Grid {
                                     try {
                                         this.write_word(word, current_position, direction, +word_idx);
                                     } catch (error) {
-                                        word_written = false;
+                                        ugly_fail = true;
                                         
                                     }
                                     break;
@@ -212,9 +218,6 @@ export class Grid {
     protected check_cell_letter_match(position: Position, letter: string, first_cell: boolean = false) {
         let cell = this.get_cell(position);
         if ((first_cell === true) && (cell.idx)) {
-            console.info('YOLO \n coucou')
-            console.log(cell.letter);
-            console.log(cell.idx)
             return false
         };
         if ((cell.letter === letter) || (cell.letter == null)) {
