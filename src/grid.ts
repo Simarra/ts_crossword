@@ -51,7 +51,7 @@ export class Grid {
             // Generate the Board
             this.generate_board();
 
-            let word_written: Boolean;
+            var word_written: Boolean;
 
             // Iterate over words list
             for (let word_idx in this.words.word_desc_array) {
@@ -60,14 +60,17 @@ export class Grid {
                 // get random position
                 let initial_position = this.get_random_position();
                 // Check letter on initial cell.
+                // let current_position =  new Position(initial_position.row, initial_position.col);
                 let current_position = this.get_next_position_on_grid(initial_position);
                 word_written = false;
                 // Examine current position.
-                while (current_position != initial_position) {
-                    if (word_written === true) {
+                while ( (current_position.col != initial_position.col ) || (current_position.row != initial_position.row) ) {
+                    if (word_written === true) {// TODO: HERE THE DEBUGGER STOP WHILE INFITE LOOP
                         // the word has been written. Exit loop.
                         break;
-                    }
+                    } else {
+                        current_position = this.get_next_position_on_grid(current_position);
+                    };
                     let first_cell_match = this.check_cell_letter_match(current_position, word[0], true);
                     // first cell can not having already and idx.
                     if (first_cell_match === true) {
@@ -86,12 +89,12 @@ export class Grid {
                                         let match: boolean = this.check_cell_letter_match(pos, letter);
                                         if (match === false) {
                                             word_written = false;
-                                            current_position = this.get_next_position_on_grid(current_position);
+                                            // current_position = this.get_next_position_on_grid(current_position);
                                             break;
                                         };
                                     } else {
                                         word_written = false;
-                                        current_position = this.get_next_position_on_grid(current_position);
+                                        // current_position = this.get_next_position_on_grid(current_position);
                                         break;
 
                                     };
@@ -108,9 +111,9 @@ export class Grid {
                                 // if all directions failed, go to a next first position.
                                 break
                             };
-                        }
+                        } // END for loop direction.
                     } else {
-                        current_position = this.get_next_position_on_grid(current_position);
+                        // current_position = this.get_next_position_on_grid(current_position);
                         word_written = false;
                     };
                 };
@@ -132,6 +135,10 @@ export class Grid {
             }
             // check that all indexes are presents. If not, iterate again. TODO 
         };
+        if (word_written === false) {
+                throw new Error("Board couldn't be filled.");
+
+        }
     };
 
 

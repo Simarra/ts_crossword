@@ -126,7 +126,7 @@ describe("test Board generation", () => {
   });
   test("crossing words", () => {
   var test_words_bigger = new WordListDescr(['son', 'olive', 'seul', 'oeil', 'sass'], ['zigoto', 'lieu ou habiter', 'surface plate', 'le cool', 'le son']);
-    for (let i = 0; i < 50; i++) {
+    for (let i = 0; i < 500; i++) {
     let grid = new Grid(5, 6, test_words_bigger);
     grid.generate_board();
     grid.fill_board();
