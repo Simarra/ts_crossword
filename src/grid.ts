@@ -238,14 +238,16 @@ export class Grid {
 
     protected check_cell_letter_match(position: Position, letter: string, first_cell: boolean = false) {
         let cell = this.get_cell(position);
-        if ((first_cell === true) && (cell.idx)) {
-            return false
-        };
+        let ret: boolean;
         if ((cell.letter === letter) || (cell.letter == null)) {
-            return true
+           ret = true; 
         } else {
-            return false
+            ret =  false;
         }
+        if ((first_cell === true) && (cell.idx || cell.idx === 0)) {
+            ret = false;
+        };
+        return ret;
     };
 
     protected format_pos(row: number, col: number): Position {
