@@ -71,9 +71,13 @@ export class Grid {
                     let first_cell_match = this.check_cell_letter_match(current_position, word[0], true);
                     // first cell can not having already and idx.
                     if (first_cell_match === true) {
+                        // try all directions randomly
                         for (let direction of this.get_randomized_directions()) {
+                            // FIXME: Here is the error: a new current position without first letter checking can be returned.
                             if (word_written === false) {
                                 let pos: Position = new Position(current_position.row, current_position.col);
+
+                                // try to write all letters
                                 for (let letter of word.slice(1)) {
                                     word_written = true;
                                     pos = this.get_next_position(pos, direction);
@@ -91,8 +95,8 @@ export class Grid {
                                         break;
 
                                     };
-
                                 };
+
                                 if (word_written === true) {
                                     // TODO: FIX THIS. THE UGGLIEST THING EVER DONE.
                                     // This is done because couldnt resolve bug of idx overwitten.
@@ -101,6 +105,7 @@ export class Grid {
 
                                 };
                             } else {
+                                // if all directions failed, go to a next first position.
                                 break
                             };
                         }
