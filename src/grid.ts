@@ -42,8 +42,29 @@ export class Grid {
         this.words = words;
     }
 
-    public fill_board() {
-        // Core method wich gen letters on the board.
+    public fill_board(algo_type: string = "brute_force") {
+        if (algo_type === "brute_force") {
+            this.fill_board_using_bruteforce();
+        }
+        else if (algo_type === "easy_mode") {
+
+        }
+        else {
+            throw new Error("invalid mode setted : " + algo_type);
+            
+        }
+    };
+
+    public fill_board_using_easy_mode() {
+        // Filling the grid using an algo wich keep the grid with air and with 
+        // a lot of letters intersections.
+        // There can not be any relations between letters not related.
+
+    };
+
+    public fill_board_using_bruteforce() {
+        // Filling the grid using an algo wich try to respect a number of cells and rows.
+        // Some letters without any relations can be close to each others.
         // Iterate
         for (let iter = 0; iter < this.ITERATIONS; iter++) {
             console.log(iter);
@@ -64,7 +85,7 @@ export class Grid {
                 let current_position = this.get_next_position_on_grid(initial_position);
                 word_written = false;
                 // Examine current position.
-                while ( (current_position.col != initial_position.col ) || (current_position.row != initial_position.row) ) {
+                while ((current_position.col != initial_position.col) || (current_position.row != initial_position.row)) {
                     if (word_written === true) {// TODO: HERE THE DEBUGGER STOP WHILE INFITE LOOP
                         // the word has been written. Exit loop.
                         break;
@@ -136,7 +157,7 @@ export class Grid {
             // check that all indexes are presents. If not, iterate again. TODO 
         };
         if (word_written === false) {
-                throw new Error("Board couldn't be filled.");
+            throw new Error("Board couldn't be filled.");
 
         }
     };
@@ -165,7 +186,7 @@ export class Grid {
         // Get idx from board
         for (let row of this.board) {
             for (let cell of row) {
-                if (cell["idx"] || cell["idx"] === 0 ) {
+                if (cell["idx"] || cell["idx"] === 0) {
                     idx_getted += 1;
                 };
             }
@@ -252,9 +273,9 @@ export class Grid {
         let cell = this.get_cell(position);
         let ret: boolean;
         if ((cell.letter === letter) || (cell.letter == null)) {
-           ret = true; 
+            ret = true;
         } else {
-            ret =  false;
+            ret = false;
         }
         if ((first_cell === true) && (cell.idx || cell.idx === 0)) {
             ret = false;
