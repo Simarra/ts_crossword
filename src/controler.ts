@@ -6,7 +6,7 @@ export function generate_crossword_using_brute_force(word_list: Array<string>, d
     // Generate an array using words, descriptions, and cols and cell numbers.
   let words = new WordListDescr(word_list, description_list);
   let grid = new Grid(nb_rows, nb_cols, words);
-  grid.fill_board("brut_force")
+  grid.fill_board()
   return grid;
 
 };
@@ -16,7 +16,6 @@ export function generate_crossword_using_easy_mode(word_list: Array<string>, des
     // Generate an array using words, descriptions, and cols and cell numbers.
   let words = new WordListDescr(word_list, description_list);
   let grid = new Grid(nb_rows, nb_cols, words);
-  grid.fill_board("easy_mode")
   return grid;
 
 };
