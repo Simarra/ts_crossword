@@ -1,22 +1,9 @@
 import { Cell } from './cell';
 import { WordListDescr } from './words';
-import { random_int, shuffle } from './tools'
+import { random_int, shuffle, Position } from './tools'
 
 
-export class Position {
-    // interface used to standardise cell position.
-    row: number;
-    col: number;
-
-    constructor(row: number, col: number) {
-        this.row = row;
-        this.col = col;
-
-    };
-};
-
-
-export class Grid {
+export class GridBrut {
     // Core class: the board handler.
 
     //  Generate a grid
@@ -342,9 +329,3 @@ export class Grid {
     }
 }
 
-export class GridBrut extends Grid {
-}
-
-export class GridEasy extends Grid {
-
-}
