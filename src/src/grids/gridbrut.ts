@@ -1,6 +1,6 @@
-import { Cell } from './cell';
-import { WordListDescr } from './words';
-import { random_int, shuffle, Position } from './tools'
+import { Cell } from '../cell';
+import { WordListDescr } from '../words';
+import { random_int, shuffle, Position } from '../tools'
 
 
 export class GridBrut {

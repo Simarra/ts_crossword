@@ -1,6 +1,6 @@
-import { Cell } from './cell';
-import { WordListDescr } from './words';
-import { random_int, shuffle, Position, enum_easy_directions, enum_directions } from './tools'
+import { Cell } from '../cell';
+import { WordListDescr } from '../words';
+import { random_int, shuffle, Position, enum_easy_directions, enum_directions } from '../tools'
 
 
 
