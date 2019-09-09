@@ -341,3 +341,7 @@ export class Grid {
         }
     }
 }
+
+export class GridBrut extends Grid{
+
+}
