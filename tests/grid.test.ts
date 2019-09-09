@@ -1,8 +1,8 @@
-import { Grid, Position } from '../src/grid';
+import { Grid, Position, GridBrut } from '../src/grid';
 import { WordListDescr } from '../src/words';
 
 
-class TestClass extends Grid {
+class TestClass extends GridBrut {
     public get_next_position_on_grid(position: Position){
       return super.get_next_position_on_grid(position);
     };
@@ -33,7 +33,7 @@ var test_words = new WordListDescr(['maison', 'table'], ['lieu ou habiter', 'sur
 
 describe("test Board generation", () => {
   test("Test grid len ", () => {
-    let grid = new Grid(6, 5, test_words);
+    let grid = new GridBrut(6, 5, test_words);
     grid.generate_board();
     expect(grid.board.length).toEqual(6);
     for (let row of grid.board) {
@@ -97,14 +97,14 @@ describe("test Board generation", () => {
     expect(result).toEqual(expected_pos);
   });
   test("Test show grid", () => {
-    let grid = new Grid(5, 6, test_words);
+    let grid = new GridBrut(5, 6, test_words);
     grid.generate_board();
     grid.fill_board();
     grid.show_grid_in_console();
 
   });
   test("Test letter match cell", () => {
-    let grid = new Grid(8, 9, test_words);
+    let grid = new GridBrut(8, 9, test_words);
     grid.generate_board();
     grid.fill_board();
     grid.show_grid_in_console();
@@ -113,13 +113,13 @@ describe("test Board generation", () => {
   });
   test("test fill board", () => {
   var test_words_bigger = new WordListDescr(['maison', 'table', 'yo'], ['lieu ou habiter', 'surface plate', 'le cool']);
-    let grid = new Grid(5, 6, test_words_bigger);
+    let grid = new GridBrut(5, 6, test_words_bigger);
     grid.generate_board();
     grid.fill_board();
   });
   test("get array of idx", () => {
   var test_words_bigger = new WordListDescr(['maison', 'table', 'yo'], ['lieu ou habiter', 'surface plate', 'le cool']);
-    let grid = new Grid(5, 6, test_words_bigger);
+    let grid = new GridBrut(5, 6, test_words_bigger);
     grid.generate_board();
     grid.fill_board();
     let res = grid.get_array_of_items("idx");
@@ -127,7 +127,7 @@ describe("test Board generation", () => {
   test("crossing words", () => {
   var test_words_bigger = new WordListDescr(['son', 'olive', 'seul', 'oeil', 'sass'], ['zigoto', 'lieu ou habiter', 'surface plate', 'le cool', 'le son']);
     for (let i = 0; i < 500; i++) {
-    let grid = new Grid(5, 6, test_words_bigger);
+    let grid = new GridBrut(5, 6, test_words_bigger);
     grid.generate_board();
     grid.fill_board();
     grid.show_grid_in_console()

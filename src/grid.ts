@@ -42,27 +42,9 @@ export class Grid {
         this.words = words;
     }
 
-    public fill_board(algo_type: string = "brute_force") {
-        if (algo_type === "brute_force") {
-            this.fill_board_using_bruteforce();
-        }
-        else if (algo_type === "easy_mode") {
 
-        }
-        else {
-            throw new Error("invalid mode setted : " + algo_type);
-            
-        }
-    };
 
-    public fill_board_using_easy_mode() {
-        // Filling the grid using an algo wich keep the grid with air and with 
-        // a lot of letters intersections.
-        // There can not be any relations between letters not related.
-
-    };
-
-    public fill_board_using_bruteforce() {
+    public fill_board() {
         // Filling the grid using an algo wich try to respect a number of cells and rows.
         // Some letters without any relations can be close to each others.
         // Iterate
@@ -358,4 +340,11 @@ export class Grid {
             return this.get_bottom_position(position);
         }
     }
+}
+
+export class GridBrut extends Grid {
+}
+
+export class GridEasy extends Grid {
+
 }
