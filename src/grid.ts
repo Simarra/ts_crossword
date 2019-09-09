@@ -342,6 +342,9 @@ export class Grid {
     }
 }
 
-export class GridBrut extends Grid{
+export class GridBrut extends Grid {
+}
+
+export class GridEasy extends Grid {
 
 }
