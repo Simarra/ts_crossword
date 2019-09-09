@@ -7,19 +7,19 @@ import { random_int, shuffle, Position, enum_easy_directions, enum_directions } 
 export class Direction {
     current_dir: string;
 
-    constructor(first_dir: string = undefined) {
+    constructor(first_dir: enum_directions) {
         if (first_dir == undefined) {
-            console.log("SET A RADOM DIR")
+            // first_dir = this.get_randomized_direction();
         }
         this.current_dir = first_dir;
     }
 
 
-    protected get_randomized_directions(): Array<string> {
+    protected get_randomized_direction(): string {
         // Get suffled directions.
         let dirs = shuffle(['up', 'right', 'down']);
         let res = dirs[random_int(0, 3)];
-        return dirs;
+        return res;
     }
 
     protected direction_sense_mapper(str_dir: enum_easy_directions) {

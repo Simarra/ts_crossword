@@ -45,14 +45,14 @@ export class Position {
 };
 
 export enum enum_directions{
-  Up = "up",
-  Down = "down",
-  Left = "left",
-  Right = "right"
+  up = "up",
+  down = "down",
+  left = "left",
+  right = "right"
 }
 
 export enum enum_easy_directions{
-  Up = "up",
-  Down = "down",
-  Right = "right"
+  up = "up",
+  down = "down",
+  right = "right"
 }
