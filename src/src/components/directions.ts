@@ -111,6 +111,8 @@ export class Direction {
 
 
     public get_opposite_sense_as_str(): string {
+        // The sense must be given in a string format instead of a Direction object.
+        // This is because if we return an object, a direction has to be set and it is not desirable.
         if (this.str_current_direction === enum_directions.left || this.str_current_direction === enum_directions.right) {
             return enum_senses.hor;
         };
