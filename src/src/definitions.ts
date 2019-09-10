@@ -1,4 +1,3 @@
-
 export class Cell {
     letter: string;
     idx: number;
@@ -31,4 +30,9 @@ export enum enum_easy_directions{
   up = "up",
   down = "down",
   right = "right"
+}
+
+export enum enum_senses {
+    vert = "vertical",
+    hor = "horizontal"
 }

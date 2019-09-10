@@ -1,29 +1,61 @@
 import { WordListDescr } from '../words';
-import { Cell, Position, enum_easy_directions, enum_directions } from '../definitions'
+import { Cell, Position, enum_easy_directions, enum_directions, enum_senses } from '../definitions'
 import { random_int, shuffle } from '../tools'
 
 
-
 export class Direction {
-    current_dir: string;
+    protected _str_current_dir: string;
+    protected _str_current_sense: string;
 
-    constructor(first_dir: enum_directions) {
+    constructor(first_dir: string) {
         if (first_dir == undefined) {
-            // first_dir = this.get_randomized_direction();
+            first_dir = this.get_randomized_direction()._str_current_dir;
         }
-        this.current_dir = first_dir;
+        else if (!(first_dir in enum_directions)) {
+            throw new Error("The direction provided is wrong:  " + first_dir);
+
+        }
+        this.direction_sense_mapper(first_dir);
+        this._str_current_dir = first_dir;
     }
 
 
-    protected get_randomized_direction(): string {
+    public get_randomized_direction(): Direction {
         // Get suffled directions.
         let dirs = shuffle(['up', 'right', 'down']);
         let res = dirs[random_int(0, 3)];
-        return res;
+        return new Direction(res);
     }
 
-    protected direction_sense_mapper(str_dir: enum_easy_directions) {
+    protected direction_sense_mapper(str_dir: string) {
+        if (str_dir in [enum_directions.up, enum_directions.down]) {
+            this._str_current_sense = enum_senses.vert;
+        }
+        else {
+            this._str_current_sense = enum_senses.hor;
+        }
+    }
 
+    get str_current_dir(){
+        return this._str_current_dir;
+    }
+
+    set str_current_dir(new_dir: any) {
+        var str_dir: string;
+        if (new_dir instanceof Direction){
+            str_dir = new_dir.str_current_dir;
+        } else if (typeof new_dir === "string") {
+            str_dir = new_dir;
+        }
+        this.check_dir_validity(str_dir);
+        this._str_current_dir = str_dir;
+        this.direction_sense_mapper(str_dir);
+    }
+
+    protected check_dir_validity(str_dir: string){
+        if (!(str_dir in enum_directions)){
+            throw new Error("direction must be a direction, not: " + str_dir)
+        }
     }
 
 
