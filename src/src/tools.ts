@@ -22,3 +22,25 @@ export function shuffle(array) {
   return array;
 }
 
+export function* next_direction_generator(){
+  // Generator wich create random direction.
+  var dirs = ["right", "up", "down"];
+  dirs = shuffle(dirs);
+  for (let dir of dirs){
+    yield dir;
+  }
+
+}
+
+export function convert_enum_to_list(enm): Array<string>{
+  var res = Object.keys(enm).map(key => enm[key]) 
+  return res;
+  }
+
+export function arrayRemove(arr, value) {
+
+   return arr.filter(function(ele){
+       return ele != value;
+   });
+
+}

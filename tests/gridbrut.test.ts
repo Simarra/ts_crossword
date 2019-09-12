@@ -1,5 +1,6 @@
-import { Grid, Position, GridBrut } from '../src/grid';
-import { WordListDescr } from '../src/words';
+import {  GridBrut } from '../src/src/grids/gridbrut';
+import { WordListDescr } from '../src/src/components/words';
+import {Position} from '../src/src/components/positions'
 
 
 class TestClass extends GridBrut {
