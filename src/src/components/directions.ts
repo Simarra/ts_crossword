@@ -48,7 +48,7 @@ export class Direction {
         throw new Error("Manual setting of sense not permitted.")
     }
 
-    set str_current_dir(new_dir: any) {
+    set str_current_direction(new_dir: any) {
         var str_dir: string;
         if (new_dir instanceof Direction) {
             str_dir = new_dir.str_current_direction;
@@ -67,7 +67,7 @@ export class Direction {
         if (dir instanceof Direction) {
             str_dir = dir._str_current_direction;
         }
-        else if (typeof dir != "string") {
+        else if (typeof dir === "string") {
             str_dir = dir;
         }
         else {
