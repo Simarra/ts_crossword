@@ -3,9 +3,10 @@ import { enum_easy_directions, enum_directions } from '../definitions'
 import { Cell } from '../components/cell'
 import { Position } from '../components/positions'
 import { random_int, shuffle } from '../tools'
+import { BaseGrid } from './basegrid'
 
 
-export class GridBrut {
+export class GridBrut extends BaseGrid {
     // Core class: the board handler.
 
     //  Generate a grid
@@ -19,18 +20,6 @@ export class GridBrut {
     //       If fail, go to next iteration
     //       If all cells failed, raise
     // Go to next word
-    ITERATIONS: number = 500;
-    nb_col: number;
-    nb_row: number;
-    words: WordListDescr;
-    board: Array<Array<Cell>>;
-
-    constructor(nb_row: number, nb_col: number, words: WordListDescr) {
-        this.nb_col = nb_col - 1;
-        this.nb_row = nb_row - 1;
-        this.words = words;
-    }
-
 
 
     public fill_board() {
@@ -134,80 +123,6 @@ export class GridBrut {
     };
 
 
-    public show_grid_in_console(): void {
-        // print the grid in console.
-        let res_array: Array<string> = [];
-        let res: string = '';
-        for (let row of this.board) {
-            let tmp_array = row.map(x => x.letter);
-            let tmp_str: string = tmp_array.join(" | ");
-            res_array.push(tmp_str);
-            console.log(res_array.join("\n"))
-        }
-    };
-
-
-    public check_idx_are_presents() {
-        let idx_getted: number = 0;
-        let idx_expected: number = this.words.word_desc_array.length;
-
-        // Get idx from descr
-
-
-        // Get idx from board
-        for (let row of this.board) {
-            for (let cell of row) {
-                if (cell["idx"] || cell["idx"] === 0) {
-                    idx_getted += 1;
-                };
-            }
-        }
-
-        if (idx_getted === idx_expected) {
-            return true
-        } else {
-            return false
-        }
-
-    };
-
-    public export_to_json() {
-        // Export to JSON 
-    };
-
-    public get_array_of_items(item_to_get: string) {
-        // Extract cell content and return an array usable.
-        // item_to_get: letter, idx, direction 
-        let tmp_array = [];//: Array<Array<string>>;
-        for (let row of this.board) {
-            let tmp_row = row.map(x => x[item_to_get]);
-            tmp_array.push(tmp_row)
-        };
-        return tmp_array;
-    };
-
-
-    public generate_board(): void {
-        // Generate the board structure
-        let row_it: number;
-        this.board = [];
-        for (let row_it = 0; row_it < this.nb_row + 1; row_it++) {
-            let tmp_row = new Array(this.nb_col + 1);
-            for (let col_it = 0; col_it < this.nb_col + 1; col_it++) {
-                tmp_row[col_it] = new Cell();
-            }
-            this.board.push(tmp_row);
-        }
-    };
-
-
-    protected get_cell(cell_pos: Position): Cell {
-        let result = this.board[cell_pos.row][cell_pos.col];
-        return result;
-    };
-
-
-
     protected get_right_position(position: Position) {
         let pos = new Position(position.row, position.col)
         if (pos.col === this.nb_col) {
@@ -254,39 +169,6 @@ export class GridBrut {
         return ret;
     };
 
-    protected format_pos(row: number, col: number): Position {
-        let result = new Position(row, col);
-        return result;
-    };
-
-    protected get_random_position(): Position {
-        let min = 0;
-        let col_max = this.nb_col;
-        let row_max = this.nb_row;
-
-        //ugly
-        let rd_row = random_int(min, row_max);
-        let rd_col = random_int(min, col_max);
-
-        let result = new Position(rd_row, rd_col);
-        return result;
-    };
-
-    protected get_next_position_on_grid(position: Position): Position {
-        // Method used to iterate on the grid.
-        let pos = new Position(position.row, position.col);
-
-        if ((pos.col === this.nb_col) && (pos.row === this.nb_row)) {
-            pos.col = 0;
-            pos.row = 0;
-        } else if (pos.col === this.nb_col) {
-            pos.col = 0;
-            pos.row += 1;
-        } else {
-            pos.col += 1;
-        }
-        return pos;
-    };
 
     protected get_randomized_directions(): Array<string> {
         // Get suffled directions.
