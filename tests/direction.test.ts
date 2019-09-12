@@ -1,5 +1,5 @@
 import { Direction } from '../src/src/components/directions';
-import { enum_senses, enum_directions } from '../src/src/definitions'
+import { enum_senses, enum_directions, enum_easy_directions } from '../src/src/definitions'
 import { convert_enum_to_list } from '../src/src/tools'
 
 describe("Direction class tester", () => {
@@ -46,6 +46,22 @@ describe("Direction class tester", () => {
         expect(res_array[0]).toEqual(enum_directions.left);
 
         for (let elt of convert_enum_to_list(enum_directions)) {
+            expect(res_array).toContain(elt)
+        }
+    });
+
+
+    test("Test easy direction generator", () => {
+        var res_array = [];
+
+        var test_dir = new Direction(enum_directions.left);
+        for (let dir of test_dir.random_easy_directions_gen()) {
+            res_array.push(dir.str_current_direction);
+        }
+        expect(res_array.length).toEqual(4);
+        expect(res_array[0]).toEqual(enum_directions.left);
+
+        for (let elt of convert_enum_to_list(enum_easy_directions)) {
             expect(res_array).toContain(elt)
         }
     });
