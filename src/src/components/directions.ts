@@ -28,10 +28,10 @@ export class Direction {
     }
 
     protected direction_sense_mapper(str_dir: string) {
-        if (str_dir in [enum_directions.up, enum_directions.down]) {
+        if (str_dir === enum_directions.up || str_dir === enum_directions.down) {
             this._str_current_sense = enum_senses.vert;
         }
-        else {
+        else if (str_dir === enum_directions.left || str_dir === enum_directions.right) {
             this._str_current_sense = enum_senses.hor;
         }
     }
@@ -81,7 +81,22 @@ export class Direction {
 
     public *random_directions_gen() {
         // Generator wich provides senses string items
-        // Use easy direction(from left to right but no right to left)
+        // Use all direction(from left to right but no right to left)
+        var dirs: Array<string> = convert_enum_to_list(enum_directions);
+        dirs = arrayRemove(dirs, this._str_current_direction);
+        dirs = shuffle(dirs);
+        yield new Direction(this._str_current_direction);
+        for (let elt of dirs) {
+            yield new Direction(elt);
+        }
+
+    }
+
+    public *random_easy_directions_gen() {
+        /** 
+         * Generator wich provides senses string items
+         * Use easy direction(from left to right but no right to left)
+        */
         var dirs: Array<string> = convert_enum_to_list(enum_easy_directions);
         dirs = arrayRemove(dirs, this._str_current_direction);
         dirs = shuffle(dirs);
@@ -96,14 +111,14 @@ export class Direction {
 
         if (this.str_current_direction === enum_directions.left) {
             return new Direction(enum_directions.right);
-        };
-        if (this.str_current_direction === enum_directions.right) {
+        }
+        else if (this.str_current_direction === enum_directions.right) {
             return new Direction(enum_directions.left);
-        };
-        if (this.str_current_direction === enum_directions.up) {
+        }
+        else if (this.str_current_direction === enum_directions.up) {
             return new Direction(enum_directions.down);
-        };
-        if (this.str_current_direction === enum_directions.down) {
+        }
+        else if (this.str_current_direction === enum_directions.down) {
             return new Direction(enum_directions.up);
         };
     }
