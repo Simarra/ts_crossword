@@ -6,19 +6,9 @@ import { random_int, shuffle } from '../tools'
 
 
 export class BaseGrid {
-    // Core class: the board handler.
+    // Core class wich must be subclassed.
 
-    //  Generate a grid
-    //  Take next word
-    //  Take random position.
-    //  Take random direction.
-    //  Test if word can be written
-    //  If so write it. 
-    //       If no, try next direction
-    //       If no, Do the same on next cell
-    //       If fail, go to next iteration
-    //       If all cells failed, raise
-    // Go to next word
+    // Contains commons for daughters grids. 
     ITERATIONS: number = 500;
     nb_col: number;
     nb_row: number;
