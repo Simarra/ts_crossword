@@ -123,37 +123,6 @@ export class GridBrut extends BaseGrid {
     };
 
 
-    protected get_right_position(position: Position) {
-        let pos = new Position(position.row, position.col)
-        if (pos.col === this.nb_col) {
-            pos.col = -1;
-        } else { pos.col += 1 }
-        return pos
-    };
-
-    protected get_left_position(position: Position) {
-        let pos = new Position(position.row, position.col)
-        if (pos.col === 0) {
-            pos.col = -1;
-        } else { pos.col -= 1 }
-        return pos
-    };
-
-    protected get_upper_position(position: Position) {
-        let pos = new Position(position.row, position.col)
-        if (pos.row === 0) {
-            pos.col = -1;
-        } else { pos.row -= 1 }
-        return pos
-    };
-
-    protected get_bottom_position(position: Position) {
-        let pos = new Position(position.row, position.col)
-        if (pos.row === this.nb_row) {
-            pos.col = -1;
-        } else { pos.row += 1 }
-        return pos
-    };
 
     protected check_cell_letter_match(position: Position, letter: string, first_cell: boolean = false) {
         let cell = this.get_cell(position);
