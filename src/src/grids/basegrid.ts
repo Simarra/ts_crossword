@@ -106,9 +106,19 @@ export class BaseGrid {
     };
 
 
-    protected check_cell_letter_match(position: Position, letter: string, first_cell: boolean = false) {
-        throw new Error("Not implemnted")
-    }
+    protected check_cell_letter_match(position: Position, letter: string, first_cell: boolean = false): boolean {
+        let cell = this.get_cell(position);
+        let ret: boolean;
+        if ((cell.letter === letter) || (cell.letter == null)) {
+            ret = true;
+        } else {
+            ret = false;
+        }
+        if ((first_cell === true) && (cell.idx || cell.idx === 0)) {
+            ret = false;
+        };
+        return ret;
+    };
 
     protected format_pos(row: number, col: number): Position {
         let result = new Position(row, col);
@@ -183,7 +193,7 @@ export class BaseGrid {
         throw new Error("Not implemented");
     }
 
-    protected get_next_position(position: Position, direction: string | Direction) {
+    protected get_next_position(position: Position, direction: string | Direction): Position {
         // Get closest next position using a direction.
         throw new Error("Not implemented");
     }

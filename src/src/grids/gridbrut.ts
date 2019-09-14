@@ -124,19 +124,6 @@ export class GridBrut extends BaseGrid {
 
 
 
-    protected check_cell_letter_match(position: Position, letter: string, first_cell: boolean = false) {
-        let cell = this.get_cell(position);
-        let ret: boolean;
-        if ((cell.letter === letter) || (cell.letter == null)) {
-            ret = true;
-        } else {
-            ret = false;
-        }
-        if ((first_cell === true) && (cell.idx || cell.idx === 0)) {
-            ret = false;
-        };
-        return ret;
-    };
 
 
     protected get_randomized_directions(): Array<string> {
@@ -167,7 +154,7 @@ export class GridBrut extends BaseGrid {
         }
     };
 
-    protected get_next_position(position: Position, direction: string) {
+    protected get_next_position(position: Position, direction: string): Position {
         // Get closest next position using a direction.
         if (direction === "left") {
             return this.get_left_position(position);

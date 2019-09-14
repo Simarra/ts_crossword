@@ -1,0 +1,1 @@
+// Must add test of get next direction.
