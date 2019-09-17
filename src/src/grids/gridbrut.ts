@@ -123,51 +123,7 @@ export class GridBrut extends BaseGrid {
     };
 
 
-    protected get_right_position(position: Position) {
-        let pos = new Position(position.row, position.col)
-        if (pos.col === this.nb_col) {
-            pos.col = -1;
-        } else { pos.col += 1 }
-        return pos
-    };
 
-    protected get_left_position(position: Position) {
-        let pos = new Position(position.row, position.col)
-        if (pos.col === 0) {
-            pos.col = -1;
-        } else { pos.col -= 1 }
-        return pos
-    };
-
-    protected get_upper_position(position: Position) {
-        let pos = new Position(position.row, position.col)
-        if (pos.row === 0) {
-            pos.col = -1;
-        } else { pos.row -= 1 }
-        return pos
-    };
-
-    protected get_bottom_position(position: Position) {
-        let pos = new Position(position.row, position.col)
-        if (pos.row === this.nb_row) {
-            pos.col = -1;
-        } else { pos.row += 1 }
-        return pos
-    };
-
-    protected check_cell_letter_match(position: Position, letter: string, first_cell: boolean = false) {
-        let cell = this.get_cell(position);
-        let ret: boolean;
-        if ((cell.letter === letter) || (cell.letter == null)) {
-            ret = true;
-        } else {
-            ret = false;
-        }
-        if ((first_cell === true) && (cell.idx || cell.idx === 0)) {
-            ret = false;
-        };
-        return ret;
-    };
 
 
     protected get_randomized_directions(): Array<string> {
@@ -176,29 +132,8 @@ export class GridBrut extends BaseGrid {
         return dirs;
     };
 
-    protected write_word(word: string, first_cell_pos: Position, direction: string, idx: number) {
-        // Write the word on the array.
-        // Write first cell
-        let cell: Cell;
-        cell = this.get_cell(first_cell_pos);
 
-        if (cell.idx) {
-            throw new Error("Trying to write index on existing index.")
-        }
-
-        cell.idx = idx;
-        cell.letter = word[0];
-        cell.direction = direction;
-        let pos = new Position(first_cell_pos.row, first_cell_pos.col)
-        // write other elts.
-        for (let letter of word.slice(1)) {
-            pos = this.get_next_position(pos, direction);
-            cell = this.get_cell(pos);
-            cell.letter = letter;
-        }
-    };
-
-    protected get_next_position(position: Position, direction: string) {
+    protected get_next_position(position: Position, direction: string): Position {
         // Get closest next position using a direction.
         if (direction === "left") {
             return this.get_left_position(position);

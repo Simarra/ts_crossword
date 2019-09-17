@@ -3,6 +3,7 @@ import { enum_easy_directions, enum_directions } from '../definitions'
 import { Cell } from '../components/cell'
 import { Position } from '../components/positions'
 import { random_int, shuffle } from '../tools'
+import { Direction } from '../components/directions';
 
 
 export class BaseGrid {
@@ -105,7 +106,7 @@ export class BaseGrid {
     };
 
 
-    protected check_cell_letter_match(position: Position, letter: string, first_cell: boolean = false) {
+    protected check_cell_letter_match(position: Position, letter: string, first_cell: boolean = false): boolean {
         let cell = this.get_cell(position);
         let ret: boolean;
         if ((cell.letter === letter) || (cell.letter == null)) {
@@ -154,14 +155,60 @@ export class BaseGrid {
     };
 
 
-    protected write_word(word: string, first_cell_pos: Position, direction: string, idx: number) {
+    protected get_right_position(position: Position) {
+        let pos = new Position(position.row, position.col)
+        if (pos.col === this.nb_col) {
+            pos.col = -1;
+        } else { pos.col += 1 }
+        return pos
+    };
+
+    protected get_left_position(position: Position) {
+        let pos = new Position(position.row, position.col)
+        if (pos.col === 0) {
+            pos.col = -1;
+        } else { pos.col -= 1 }
+        return pos
+    };
+
+    protected get_upper_position(position: Position) {
+        let pos = new Position(position.row, position.col)
+        if (pos.row === 0) {
+            pos.col = -1;
+        } else { pos.row -= 1 }
+        return pos
+    };
+
+    protected get_bottom_position(position: Position) {
+        let pos = new Position(position.row, position.col)
+        if (pos.row === this.nb_row) {
+            pos.col = -1;
+        } else { pos.row += 1 }
+        return pos
+    };
+    protected write_word(word: string, first_cell_pos: Position, direction: string|Direction, idx: number) {
         // Write the word on the array.
         // Write first cell
-        // Get closest next position using a direction.
-        throw new Error("Not implemented");
-    }
+        let cell: Cell;
+        cell = this.get_cell(first_cell_pos);
 
-    protected get_next_position(position: Position, direction: string) {
+        if (cell.idx) {
+            throw new Error("Trying to write index on existing index.")
+        }
+
+        cell.idx = idx;
+        cell.letter = word[0];
+        cell.direction = direction;
+        let pos = new Position(first_cell_pos.row, first_cell_pos.col)
+        // write other elts.
+        for (let letter of word.slice(1)) {
+            pos = this.get_next_position(pos, direction);
+            cell = this.get_cell(pos);
+            cell.letter = letter;
+        }
+    };
+
+    protected get_next_position(position: Position, direction: string | Direction): Position {
         // Get closest next position using a direction.
         throw new Error("Not implemented");
     }
