@@ -38,26 +38,5 @@ export class GridEasy extends BaseGrid {
         }
     }
 
-    protected write_word(word: string, first_cell_pos: Position, direction: string|Direction, idx: number) {
-        // Write the word on the array.
-        // Write first cell
-        let cell: Cell;
-        cell = this.get_cell(first_cell_pos);
-
-        if (cell.idx) {
-            throw new Error("Trying to write index on existing index.")
-        }
-
-        cell.idx = idx;
-        cell.letter = word[0];
-        cell.direction = direction;
-        let pos = new Position(first_cell_pos.row, first_cell_pos.col)
-        // write other elts.
-        for (let letter of word.slice(1)) {
-            pos = this.get_next_position(pos, direction);
-            cell = this.get_cell(pos);
-            cell.letter = letter;
-        }
-    };
 
 }
