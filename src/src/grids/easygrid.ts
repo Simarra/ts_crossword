@@ -33,6 +33,10 @@ export class GridEasy extends BaseGrid {
                 for (let word_idx in words_desc_shuffled) {
                     let word = this.words.word_desc_array[word_idx][WordListDescr.word_key];
 
+                    // NOW TRY TO WRITE WORDS [1:]
+
+                    // LETS FIND LETTERS INTERSECTIONS.
+
                     // get random position
                     let initial_position = this.get_random_position();
                     // Check letter on initial cell.

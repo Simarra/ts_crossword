@@ -53,13 +53,22 @@ export class WordListDescr {
         }
     }
 
-    public not_written_words_desct() {
+    public get_written_desc_array(): Array<any> {
+        return this.get_written_or_not_word_descr_array(true);
+    }
+
+    public get_not_written_desc_array(): Array<any> {
+        return this.get_written_or_not_word_descr_array(false);
+    }
+
+    private get_written_or_not_word_descr_array(bool: boolean): Array<any> {
         let res_array:Array<any> = [];
 
         for (let elt of this.word_desc_array){
-            if (elt)
-
-
+            if (elt[WordListDescr.written_key] === bool){
+                res_array.push(elt);
+            }
+            return res_array
         }
     }
 }
