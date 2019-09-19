@@ -1,3 +1,5 @@
+import { shuffle } from "../tools";
+
 export class WordListDescr {
     // example word list generated:
     //      [ [ 'maison', 'lieu ou habiter' ],
@@ -31,6 +33,10 @@ export class WordListDescr {
             this.word_desc_array.push(tmp_array)
 
         }
+    }
+
+    public shuffle_words_descr(): WordListDescr{
+        return shuffle(this.word_desc_array);
     }
 
     private assert_word_descr_equals() {

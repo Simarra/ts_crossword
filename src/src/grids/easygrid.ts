@@ -3,6 +3,7 @@ import { Cell } from '../components/cell'
 import { Position } from '../components/positions'
 import { Direction } from "../components/directions";
 import { enum_directions } from "../definitions"
+import { WordListDescr } from "../components/words";
 
 export class GridEasy extends BaseGrid {
 
@@ -12,8 +13,39 @@ export class GridEasy extends BaseGrid {
         // The algo aims to have all words with intersections, and with no words wich means nothing.
         // Only up down and left directions are kept.
 
-        // Iterate
+        for (let iter = 0; iter < this.ITERATIONS; iter++) {
+            console.log("Essai: " + iter.toString);
+
+            this.generate_board();
+            var word_written: Boolean;
+
+            var words_desc_shuffled: WordListDescr = this.words.shuffle_words_descr();
+
+            for (let word_idx in words_desc_shuffled) {
+                let word = this.words.word_desc_array[word_idx][0];
+
+                // get random position
+                let initial_position = this.get_random_position();
+                // Check letter on initial cell.
+                // let current_position =  new Position(initial_position.row, initial_position.col);
+                let current_position = this.get_next_position_on_grid(initial_position);
+                word_written = false;
+
+
+
+            }
+
+
+
+        }
     }
+
+    protected fill_first_word(word: string) {
+        let initial_position = this.get_random_position();
+        let current_position = this.get_next_position_on_grid(initial_position);
+
+    }
+    ;
 
     protected get_next_position(position: Position, direction: string | Direction): Position {
         var dir: Direction;

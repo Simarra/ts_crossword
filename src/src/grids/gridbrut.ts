@@ -46,7 +46,7 @@ export class GridBrut extends BaseGrid {
                 word_written = false;
                 // Examine current position.
                 while ((current_position.col != initial_position.col) || (current_position.row != initial_position.row)) {
-                    if (word_written === true) {// TODO: HERE THE DEBUGGER STOP WHILE INFITE LOOP
+                    if (word_written === true) {
                         // the word has been written. Exit loop.
                         break;
                     } else {
