@@ -5,7 +5,7 @@ export class Direction {
     protected _str_current_direction: string;
     protected _str_current_sense: string;
 
-    constructor(first_dir: string) {
+    constructor(first_dir: string = "left") {
         if (first_dir == undefined) {
             first_dir = this.get_randomized_writing_direction()._str_current_direction;
         }

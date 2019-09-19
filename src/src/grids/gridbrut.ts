@@ -57,7 +57,6 @@ export class GridBrut extends BaseGrid {
                     if (first_cell_match === true) {
                         // try all directions randomly
                         for (let direction of this.get_randomized_directions()) {
-                            // FIXME: Here is the error: a new current position without first letter checking can be returned.
                             if (word_written === false) {
                                 let pos: Position = new Position(current_position.row, current_position.col);
 
@@ -66,7 +65,6 @@ export class GridBrut extends BaseGrid {
                                     word_written = true;
                                     pos = this.get_next_position(pos, direction);
                                     if (pos.col != -1) {
-                                        // TODO: PUT HERE check for first letter.
                                         let match: boolean = this.check_cell_letter_match(pos, letter);
                                         if (match === false) {
                                             word_written = false;

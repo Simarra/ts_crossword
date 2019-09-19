@@ -14,25 +14,34 @@ export class GridEasy extends BaseGrid {
         // Only up down and left directions are kept.
 
         for (let iter = 0; iter < this.ITERATIONS; iter++) {
-            console.log("Essai: " + iter.toString);
+            console.log("Essai: " + iter.toString());
 
             this.generate_board();
             var word_written: Boolean;
 
             var words_desc_shuffled: WordListDescr = this.words.shuffle_words_descr();
 
-            for (let word_idx in words_desc_shuffled) {
-                let word = this.words.word_desc_array[word_idx][0];
+            // fill first word
+            let first_word_idx = 0;
+            let first_word = this.words.word_desc_array[first_word_idx][WordListDescr.word_key];
+            let first_word_written: boolean = this.fill_first_word(first_word, first_word_idx)
 
-                // get random position
-                let initial_position = this.get_random_position();
-                // Check letter on initial cell.
-                // let current_position =  new Position(initial_position.row, initial_position.col);
-                let current_position = this.get_next_position_on_grid(initial_position);
-                word_written = false;
+            if (first_word_written === true) {
+                this.words.word_desc_array[first_word_idx][WordListDescr.written_key] = true;
 
 
+                for (let word_idx in words_desc_shuffled) {
+                    let word = this.words.word_desc_array[word_idx][WordListDescr.word_key];
 
+                    // get random position
+                    let initial_position = this.get_random_position();
+                    // Check letter on initial cell.
+                    // let current_position =  new Position(initial_position.row, initial_position.col);
+                    let current_position = this.get_next_position_on_grid(initial_position);
+
+
+
+                }
             }
 
 
@@ -40,10 +49,52 @@ export class GridEasy extends BaseGrid {
         }
     }
 
-    protected fill_first_word(word: string) {
+    protected fill_first_word(word: string, word_idx: number): boolean {
         let initial_position = this.get_random_position();
         let current_position = this.get_next_position_on_grid(initial_position);
+        let word_written: boolean = false;
+        while ((current_position.col != initial_position.col) || (current_position.row != initial_position.row)) {
 
+            current_position = this.get_next_position_on_grid(current_position);
+            let first_cell_match = this.check_cell_letter_match(current_position, word[WordListDescr.word_key], true);
+
+            if (first_cell_match === true) {
+                let dir = new Direction();
+                for (let direction of dir.random_easy_directions_gen()) {
+                    // if word written var to set?
+                    let pos = new Position(current_position.row, current_position.col);
+
+                    // ty to write all letters
+                    for (let letter of word.slice(1)) {
+                        word_written = true;
+                        pos = this.get_next_position(pos, direction);
+                        if (pos.col != -1) {
+                            let match: boolean = this.check_cell_letter_match(pos, letter);
+                            if (match === false) {
+                                word_written = false;
+                                break;
+                            };
+                        } else {
+                            word_written = false;
+                            // current_position = this.get_next_position_on_grid(current_position);
+                            break;
+
+                        }
+
+                    }
+
+                    if (word_written === true) {
+                        this.write_word(word, current_position, direction, word_idx)
+                        return true;
+                    }
+                }
+
+            } else {
+                // go to next iteration if no first cell match. Should not happends on first word.
+            }
+        }
+        // If failed to find a good first letter.
+        return false;
     }
     ;
 

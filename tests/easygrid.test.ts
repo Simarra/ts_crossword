@@ -106,3 +106,19 @@ describe("test Board generation", () => {
 }
 
 )
+
+
+
+
+
+describe("test the fill method", () => {
+    test("Test fill method word", () => {
+        let grid = new GridEasy(6, 5, test_words);
+        grid.generate_board();
+        grid.fill_board();
+        grid.show_grid_in_console()
+    })
+    
+}
+
+)
