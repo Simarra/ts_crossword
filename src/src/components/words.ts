@@ -1,25 +1,13 @@
 import { shuffle } from "../tools";
+import { Position } from "../components/positions"
 
 
 export class WordListDescr {
-    // example word list generated:
-    //      [ [ 'maison', 'lieu ou habiter' ],
-    //   [ 'table', 'surface plate' ] ]
-    // ┌─────────┬──────────┬───────────────────┐
-    // │ (index) │    0     │         1         │  2
-    // ├─────────┼──────────┼───────────────────┤
-    // │    0    │ 'maison' │ 'lieu ou habiter' │  false  // not written
-    // │    1    │ 'table'  │  'surface plate'  │  true  // written
-    // └─────────┴──────────┴───────────────────┘
 
     private words: Array<string>;
     private descr: Array<string>;
-    public word_desc_array: Array<Array<any>>;
+    public word_desc_array: Array<Map<string, string|Boolean|Position>>;
 
-
-    static word_key = 0;
-    static descr_key = 1;
-    static written_key = 2;
 
     constructor(words: Array<string>, descr: Array<string>) {
         this.words = words;
@@ -33,17 +21,19 @@ export class WordListDescr {
     public generate_word_descr_array() {
         for (let wd_idx in this.words) {
 
-            let tmp_array: Array<any> = [];
-            tmp_array.push(this.words[wd_idx])
-            tmp_array.push(this.descr[wd_idx])
-            tmp_array.push(false) // only used on easy mode.
+            let tmp_dict = new Map<string, string|Boolean|Position>();
+            tmp_dict.set("idx", wd_idx);
+            tmp_dict.set("word", this.words[wd_idx]);
+            tmp_dict.set("description", this.descr[wd_idx]);
+            tmp_dict.set("written", false) // only used on easy mode.
+            tmp_dict.set("position", undefined);
 
-            this.word_desc_array.push(tmp_array)
+            this.word_desc_array.push(tmp_dict);
 
         }
     }
 
-    public shuffle_words_descr(): WordListDescr{
+    public shuffle_words_descr(): WordListDescr {
         return shuffle(this.word_desc_array);
     }
 
@@ -62,10 +52,10 @@ export class WordListDescr {
     }
 
     private get_written_or_not_word_descr_array(bool: boolean): Array<any> {
-        let res_array:Array<any> = [];
+        let res_array: Array<any> = [];
 
-        for (let elt of this.word_desc_array){
-            if (elt[WordListDescr.written_key] === bool){
+        for (let elt of this.word_desc_array) {
+            if (elt.get("written") === bool) {
                 res_array.push(elt);
             }
             return res_array
