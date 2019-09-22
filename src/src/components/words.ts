@@ -4,12 +4,12 @@ import { Direction } from "./directions";
 
 
 export class WordProperties {
-    idx: number;
-    word: string;
-    description: string;
-    written: Boolean;
-    _first_position: Position;
-    _direction: Direction;
+    public idx: number;
+    public word: string;
+    public description: string;
+    public written: Boolean;
+    private _first_position: Position;
+    private _direction: Direction;
 
     public *iter_elts() {
         yield this.idx;
@@ -20,27 +20,27 @@ export class WordProperties {
         yield this._direction;
     }
 
-    get first_position(){
+    get first_position() {
         return this._first_position;
     }
 
-    set first_position(pos: Position){
-        if (this.written === true){
+    set first_position(pos: Position) {
+        if (this.written === true) {
             this._first_position = pos;
-        } else{
-            throw new Error( "A position can not be setted if word is not set as written");
+        } else {
+            throw new Error("A position can not be setted if word is not set as written");
         }
     }
 
-    get direction(){
+    get direction() {
         return this._direction;
     }
 
-    set direction(dir: Direction){
-        if (this.written === true){
+    set direction(dir: Direction) {
+        if (this.written === true) {
             this._direction = dir;
-        } else{
-            throw new Error( "A direction can not be setted if word is not set as written");
+        } else {
+            throw new Error("A direction can not be setted if word is not set as written");
         }
     }
 }
@@ -61,7 +61,7 @@ export class WordListDescr {
 
     }
 
-    public generate_word_descr_array() {
+    private generate_word_descr_array() {
         for (let wd_idx in this.words) {
 
             let word_properties = new WordProperties();
@@ -69,16 +69,30 @@ export class WordListDescr {
             word_properties.word = this.words[wd_idx];
             word_properties.description = this.descr[wd_idx];
             word_properties.written = false // only used on easy mode.
-            word_properties._first_position = undefined;
-            word_properties._direction = undefined;
+            // word_properties.first_position = undefined;
+            // word_properties.direction = undefined;
 
             this.word_desc_array.push(word_properties);
 
         }
     }
 
-    public shuffle_words_descr(): WordListDescr {
-        return shuffle(this.word_desc_array);
+
+    public *[Symbol.iterator]() {
+        // Iterate on the class will iterate on the word desc array.
+        for (let elt of this.word_desc_array) {
+            yield elt;
+        }
+    }
+
+    public reset_word_descr_array() {
+        // Usefull to reset the desc array when doing iteration tries.
+        this.word_desc_array = [];
+        this.generate_word_descr_array();
+    }
+
+    public shuffle_words_descr(): void {
+        this.word_desc_array = shuffle(this.word_desc_array);
     }
 
     private assert_word_descr_equals() {
@@ -87,22 +101,21 @@ export class WordListDescr {
         }
     }
 
-    public get_written_desc_array(): Array<any> {
-        return this.get_written_or_not_word_descr_array(true);
+    public written_words(): Array<WordProperties> {
+        let res = this.word_desc_array.filter(word => word.written === true);
+        return res;
     }
 
-    public get_not_written_desc_array(): Array<any> {
-        return this.get_written_or_not_word_descr_array(false);
+    public not_written_words(): Array<WordProperties> {
+        let res = this.word_desc_array.filter(word => word.written === false);
+        return res;
     }
 
-    private get_written_or_not_word_descr_array(bool: boolean): Array<any> {
-        let res_array: Array<any> = [];
-
-        for (let elt of this.word_desc_array) {
-            if (elt.written === bool) {
-                res_array.push(elt);
-            }
-            return res_array
-        }
+    public get_word(str_word: string): WordProperties {
+        let res = this.word_desc_array.filter(word => word.word = str_word)[0];
+        return res;
     }
+
+
+
 }

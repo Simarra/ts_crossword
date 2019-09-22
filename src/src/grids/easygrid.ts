@@ -19,21 +19,26 @@ export class GridEasy extends BaseGrid {
             this.generate_board();
             var word_written: Boolean;
 
-            var words_desc_shuffled: WordListDescr = this.words.shuffle_words_descr();
+            // SHUFFLE AND RESET WORD DESCR ARRAY
+            this.words.reset_word_descr_array()
+            this.words.shuffle_words_descr();
 
-            // fill first word
+            // FILL FIRST WORD
             let first_word_idx = 0;
             let first_word = this.words.word_desc_array[first_word_idx];
             let first_word_written: boolean = this.fill_first_word(first_word, first_word_idx)
+            // END FILL FIRST WORD
 
+            // NOW TRY TO WRITE WORDS [1:]
+            let all_word_written_tested_and_failed = false;
             if (first_word_written === true) {
-                this.words.word_desc_array[first_word_idx].written === true;
+                while (all_word_written_tested_and_failed === false){
 
 
-                for (let word_idx in words_desc_shuffled) {
-                    let word = this.words.word_desc_array[word_idx].word;
+                for (let word of this.words) {
 
-                    // NOW TRY TO WRITE WORDS [1:]
+                    // GET NEXT WORD ALREADY WRITTEN
+
 
                     // LETS FIND LETTERS INTERSECTIONS.
 
@@ -47,6 +52,7 @@ export class GridEasy extends BaseGrid {
 
                 }
             }
+        }
 
 
 
