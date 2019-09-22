@@ -89,7 +89,7 @@ export class GridEasy extends BaseGrid {
                     }
 
                     if (word_written === true) {
-                        this.write_word(str_word, current_position, direction, word_idx);
+                        this.write_word(word, current_position, direction, word_idx);
                         return true;
                     }
                 }

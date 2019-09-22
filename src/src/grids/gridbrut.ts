@@ -4,6 +4,7 @@ import { Cell } from '../components/cell'
 import { Position } from '../components/positions'
 import { random_int, shuffle } from '../tools'
 import { BaseGrid } from './basegrid'
+import { Direction } from '../components/directions';
 
 
 export class GridBrut extends BaseGrid {
@@ -36,7 +37,8 @@ export class GridBrut extends BaseGrid {
 
             // Iterate over words list
             for (let word_idx in this.words.word_desc_array) {
-                let word = this.words.word_desc_array[word_idx].word;
+                let word = this.words.word_desc_array[word_idx];
+                let str_word = word.word;
 
                 // get random position
                 let initial_position = this.get_random_position();
@@ -52,16 +54,17 @@ export class GridBrut extends BaseGrid {
                     } else {
                         current_position = this.get_next_position_on_grid(current_position);
                     };
-                    let first_cell_match = this.check_cell_letter_match(current_position, word[0], true);
+                    let first_cell_match = this.check_cell_letter_match(current_position, str_word[0], true);
                     // first cell can not having already and idx.
                     if (first_cell_match === true) {
                         // try all directions randomly
-                        for (let direction of this.get_randomized_directions()) {
+                        let dir_gen = new Direction();
+                        for (let direction of dir_gen.random_directions_gen()) {
                             if (word_written === false) {
                                 let pos: Position = new Position(current_position.row, current_position.col);
 
                                 // try to write all letters
-                                for (let letter of word.slice(1)) {
+                                for (let letter of str_word.slice(1)) {
                                     word_written = true;
                                     pos = this.get_next_position(pos, direction);
                                     if (pos.col != -1) {
@@ -131,13 +134,13 @@ export class GridBrut extends BaseGrid {
     };
 
 
-    protected get_next_position(position: Position, direction: string): Position {
+    protected get_next_position(position: Position, direction: Direction): Position {
         // Get closest next position using a direction.
-        if (direction === "left") {
+        if (direction.str_current_direction === enum_directions.left) {
             return this.get_left_position(position);
-        } else if (direction == "right") {
+        } else if (direction.str_current_direction == enum_directions.right) {
             return this.get_right_position(position);
-        } else if (direction == "up") {
+        } else if (direction.str_current_sense == enum_directions.up) {
             return this.get_upper_position(position);
         }
         else {
