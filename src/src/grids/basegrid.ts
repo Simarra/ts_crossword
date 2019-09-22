@@ -1,4 +1,4 @@
-import { WordListDescr } from '../components/words';
+import { WordListDescr, WordProperties } from '../components/words';
 import { enum_easy_directions, enum_directions } from '../definitions'
 import { Cell } from '../components/cell'
 import { Position } from '../components/positions'
@@ -186,10 +186,11 @@ export class BaseGrid {
         } else { pos.row += 1 }
         return pos
     };
-    protected write_word(word: string, first_cell_pos: Position, direction: string|Direction, idx: number) {
+    protected write_word(word: WordProperties, first_cell_pos: Position, direction: Direction, idx: number) {
         // Write the word on the array.
         // Write first cell
         let cell: Cell;
+        let str_word:string  = word.word;
         cell = this.get_cell(first_cell_pos);
 
         if (cell.idx) {
@@ -197,11 +198,18 @@ export class BaseGrid {
         }
 
         cell.idx = idx;
-        cell.letter = word[0];
+        cell.letter = str_word[0];
         cell.direction = direction;
+
         let pos = new Position(first_cell_pos.row, first_cell_pos.col)
+
+        // WordDescr update
+        word.written = true;
+        word._first_position = pos;
+        word._direction = direction;
+
         // write other elts.
-        for (let letter of word.slice(1)) {
+        for (let letter of str_word.slice(1)) {
             pos = this.get_next_position(pos, direction);
             cell = this.get_cell(pos);
             cell.letter = letter;

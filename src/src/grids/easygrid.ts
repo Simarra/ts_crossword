@@ -3,7 +3,7 @@ import { Cell } from '../components/cell'
 import { Position } from '../components/positions'
 import { Direction } from "../components/directions";
 import { enum_directions } from "../definitions"
-import { WordListDescr } from "../components/words";
+import { WordListDescr, WordProperties } from "../components/words";
 
 export class GridEasy extends BaseGrid {
 
@@ -23,7 +23,7 @@ export class GridEasy extends BaseGrid {
 
             // fill first word
             let first_word_idx = 0;
-            let first_word = this.words.word_desc_array[first_word_idx].word;
+            let first_word = this.words.word_desc_array[first_word_idx];
             let first_word_written: boolean = this.fill_first_word(first_word, first_word_idx)
 
             if (first_word_written === true) {
@@ -53,9 +53,10 @@ export class GridEasy extends BaseGrid {
         }
     }
 
-    protected fill_first_word(word: string, word_idx: number): boolean {
+    protected fill_first_word(word: WordProperties, word_idx: number): boolean {
         let initial_position = this.get_random_position();
         let current_position = this.get_next_position_on_grid(initial_position);
+        let str_word:string = word.word;
         let word_written: boolean = false;
         while ((current_position.col != initial_position.col) || (current_position.row != initial_position.row)) {
 
@@ -69,7 +70,7 @@ export class GridEasy extends BaseGrid {
                     let pos = new Position(current_position.row, current_position.col);
 
                     // ty to write all letters
-                    for (let letter of word.slice(1)) {
+                    for (let letter of str_word.slice(1)) {
                         word_written = true;
                         pos = this.get_next_position(pos, direction);
                         if (pos.col != -1) {
@@ -88,7 +89,7 @@ export class GridEasy extends BaseGrid {
                     }
 
                     if (word_written === true) {
-                        this.write_word(word, current_position, direction, word_idx)
+                        this.write_word(str_word, current_position, direction, word_idx);
                         return true;
                     }
                 }

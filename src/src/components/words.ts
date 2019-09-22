@@ -1,31 +1,48 @@
 import { shuffle } from "../tools";
 import { Position } from "../components/positions"
+import { Direction } from "./directions";
 
 
-
-interface WordMapInterface {
-    idx: number,
-    word: string,
-    description: string,
-    written: boolean,
-    position: Position
-}
-
-class WordProperties {
+export class WordProperties {
     idx: number;
     word: string;
     description: string;
     written: Boolean;
-    position: Position;
+    _first_position: Position;
+    _direction: Direction;
 
     public *iter_elts() {
         yield this.idx;
         yield this.word;
         yield this.description;
         yield this.written;
-        yield this.position;
+        yield this._first_position;
+        yield this._direction;
     }
 
+    get first_position(){
+        return this._first_position;
+    }
+
+    set first_position(pos: Position){
+        if (this.written === true){
+            this._first_position = pos;
+        } else{
+            throw new Error( "A position can not be setted if word is not set as written");
+        }
+    }
+
+    get direction(){
+        return this._direction;
+    }
+
+    set direction(dir: Direction){
+        if (this.written === true){
+            this._direction = dir;
+        } else{
+            throw new Error( "A direction can not be setted if word is not set as written");
+        }
+    }
 }
 
 export class WordListDescr {
@@ -52,7 +69,8 @@ export class WordListDescr {
             word_properties.word = this.words[wd_idx];
             word_properties.description = this.descr[wd_idx];
             word_properties.written = false // only used on easy mode.
-            word_properties.position = undefined;
+            word_properties._first_position = undefined;
+            word_properties._direction = undefined;
 
             this.word_desc_array.push(word_properties);
 
