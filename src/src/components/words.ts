@@ -2,11 +2,37 @@ import { shuffle } from "../tools";
 import { Position } from "../components/positions"
 
 
+
+interface WordMapInterface {
+    idx: number,
+    word: string,
+    description: string,
+    written: boolean,
+    position: Position
+}
+
+class WordProperties {
+    idx: number;
+    word: string;
+    description: string;
+    written: Boolean;
+    position: Position;
+
+    public *iter_elts() {
+        yield this.idx;
+        yield this.word;
+        yield this.description;
+        yield this.written;
+        yield this.position;
+    }
+
+}
+
 export class WordListDescr {
 
     private words: Array<string>;
     private descr: Array<string>;
-    public word_desc_array: Array<Map<string, string|Boolean|Position>>;
+    public word_desc_array: Array<WordProperties>;
 
 
     constructor(words: Array<string>, descr: Array<string>) {
@@ -21,14 +47,14 @@ export class WordListDescr {
     public generate_word_descr_array() {
         for (let wd_idx in this.words) {
 
-            let tmp_dict = new Map<string, string|Boolean|Position>();
-            tmp_dict.set("idx", wd_idx);
-            tmp_dict.set("word", this.words[wd_idx]);
-            tmp_dict.set("description", this.descr[wd_idx]);
-            tmp_dict.set("written", false) // only used on easy mode.
-            tmp_dict.set("position", undefined);
+            let word_properties = new WordProperties();
+            word_properties.idx = Number(wd_idx);
+            word_properties.word = this.words[wd_idx];
+            word_properties.description = this.descr[wd_idx];
+            word_properties.written = false // only used on easy mode.
+            word_properties.position = undefined;
 
-            this.word_desc_array.push(tmp_dict);
+            this.word_desc_array.push(word_properties);
 
         }
     }
@@ -55,7 +81,7 @@ export class WordListDescr {
         let res_array: Array<any> = [];
 
         for (let elt of this.word_desc_array) {
-            if (elt.get("written") === bool) {
+            if (elt.written === bool) {
                 res_array.push(elt);
             }
             return res_array

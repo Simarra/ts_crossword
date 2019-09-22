@@ -23,15 +23,15 @@ export class GridEasy extends BaseGrid {
 
             // fill first word
             let first_word_idx = 0;
-            let first_word = this.words.word_desc_array[first_word_idx][WordListDescr.word_key];
+            let first_word = this.words.word_desc_array[first_word_idx].word;
             let first_word_written: boolean = this.fill_first_word(first_word, first_word_idx)
 
             if (first_word_written === true) {
-                this.words.word_desc_array[first_word_idx][WordListDescr.written_key] = true;
+                this.words.word_desc_array[first_word_idx].written === true;
 
 
                 for (let word_idx in words_desc_shuffled) {
-                    let word = this.words.word_desc_array[word_idx][WordListDescr.word_key];
+                    let word = this.words.word_desc_array[word_idx].word;
 
                     // NOW TRY TO WRITE WORDS [1:]
 
@@ -60,7 +60,7 @@ export class GridEasy extends BaseGrid {
         while ((current_position.col != initial_position.col) || (current_position.row != initial_position.row)) {
 
             current_position = this.get_next_position_on_grid(current_position);
-            let first_cell_match = this.check_cell_letter_match(current_position, word[WordListDescr.word_key], true);
+            let first_cell_match = this.check_cell_letter_match(current_position, word[0], true);
 
             if (first_cell_match === true) {
                 let dir = new Direction();

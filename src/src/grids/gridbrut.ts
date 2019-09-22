@@ -36,7 +36,7 @@ export class GridBrut extends BaseGrid {
 
             // Iterate over words list
             for (let word_idx in this.words.word_desc_array) {
-                let word = this.words.word_desc_array[word_idx][0];
+                let word = this.words.word_desc_array[word_idx].word;
 
                 // get random position
                 let initial_position = this.get_random_position();

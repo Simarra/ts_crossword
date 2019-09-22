@@ -1,3 +1,4 @@
 {
-    "editor.renderLineHighlight": "all"
+    "editor.renderLineHighlight": "all",
+    "typescript.tsdk": "node_modules\\typescript\\lib"
 }
