@@ -28,31 +28,11 @@ export class GridEasy extends BaseGrid {
             let first_word = this.words.word_desc_array[first_word_idx];
             let first_word_written: boolean = this.fill_first_word(first_word, first_word_idx)
             // END FILL FIRST WORD
+            if (first_word_written === true) {
+                this.find_matching_letter_between_not_written_and_written_word();
+            }
 
             // NOW TRY TO WRITE WORDS [1:]
-            let all_word_written_tested_and_failed = false;
-            if (first_word_written === true) {
-                while (all_word_written_tested_and_failed === false){
-
-
-                for (let word of this.words) {
-
-                    // GET NEXT WORD ALREADY WRITTEN
-
-
-                    // LETS FIND LETTERS INTERSECTIONS.
-
-                    // get random position
-                    let initial_position = this.get_random_position();
-                    // Check letter on initial cell.
-                    // let current_position =  new Position(initial_position.row, initial_position.col);
-                    let current_position = this.get_next_position_on_grid(initial_position);
-
-
-
-                }
-            }
-        }
 
 
 
@@ -62,7 +42,7 @@ export class GridEasy extends BaseGrid {
     protected fill_first_word(word: WordProperties, word_idx: number): boolean {
         let initial_position = this.get_random_position();
         let current_position = this.get_next_position_on_grid(initial_position);
-        let str_word:string = word.word;
+        let str_word: string = word.word;
         let word_written: boolean = false;
         while ((current_position.col != initial_position.col) || (current_position.row != initial_position.row)) {
 
@@ -107,30 +87,24 @@ export class GridEasy extends BaseGrid {
         // If failed to find a good first letter.
         return false;
     }
-    ;
 
-    protected get_next_position(position: Position, direction: string | Direction): Position {
-        var dir: Direction;
-        var str_dir: string;
+    protected find_matching_letter_between_not_written_and_written_word() {
+        let all_word_written_tested_and_failed = false;
+        while (all_word_written_tested_and_failed === false) {
+            for (let word_written of this.words.written_words()) {
+                for (let word_not_written of this.words.not_written_words()) {
 
-        if (typeof direction === 'string') {
-            dir = new Direction(direction);
-        } else if (direction instanceof Direction) {
-            dir = direction;
-        }
-        str_dir = dir.str_current_direction;
+                }
 
-        if (str_dir === enum_directions.left) {
-            return this.get_left_position(position);
-        } else if (str_dir == enum_directions.right) {
-            return this.get_right_position(position);
-        } else if (str_dir == enum_directions.up) {
-            return this.get_upper_position(position);
-        }
-        else {
-            return this.get_bottom_position(position);
+
+
+
+
+
+
+
+            }
         }
     }
-
 
 }

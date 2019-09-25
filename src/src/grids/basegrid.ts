@@ -205,8 +205,8 @@ export class BaseGrid {
 
         // WordDescr update
         word.written = true;
-        word._first_position = pos;
-        word._direction = direction;
+        word.first_position = pos;
+        word.direction = direction;
 
         // write other elts.
         for (let letter of str_word.slice(1)) {
@@ -216,9 +216,18 @@ export class BaseGrid {
         }
     };
 
-    protected get_next_position(position: Position, direction: string | Direction): Position {
+    protected get_next_position(position: Position, direction: Direction): Position {
         // Get closest next position using a direction.
-        throw new Error("Not implemented");
+        if (direction.str_current_direction === enum_directions.left) {
+            return this.get_left_position(position);
+        } else if (direction.str_current_direction == enum_directions.right) {
+            return this.get_right_position(position);
+        } else if (direction.str_current_sense == enum_directions.up) {
+            return this.get_upper_position(position);
+        }
+        else {
+            return this.get_bottom_position(position);
+        }
     }
 }
 

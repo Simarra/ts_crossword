@@ -85,7 +85,7 @@ export class WordListDescr {
         }
     }
 
-    public reset_word_descr_array() {
+    public reset_word_descr_array(): void {
         // Usefull to reset the desc array when doing iteration tries.
         this.word_desc_array = [];
         this.generate_word_descr_array();
@@ -95,7 +95,7 @@ export class WordListDescr {
         this.word_desc_array = shuffle(this.word_desc_array);
     }
 
-    private assert_word_descr_equals() {
+    private assert_word_descr_equals(): void {
         if (this.words.length != this.descr.length) {
             throw new RangeError('Lenghts of words and desr are not equals');
         }
