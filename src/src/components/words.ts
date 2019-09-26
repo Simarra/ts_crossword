@@ -20,7 +20,11 @@ export class WordProperties {
         yield this._direction;
     }
 
-    get first_position() {
+    public toString(): string{
+        return this.word;
+    }
+
+    get first_position(): Position {
         return this._first_position;
     }
 
@@ -32,7 +36,7 @@ export class WordProperties {
         }
     }
 
-    get direction() {
+    get direction():Direction {
         return this._direction;
     }
 

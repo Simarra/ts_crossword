@@ -29,7 +29,10 @@ export class GridEasy extends BaseGrid {
             let first_word_written: boolean = this.fill_first_word(first_word, first_word_idx)
             // END FILL FIRST WORD
             if (first_word_written === true) {
-                this.find_matching_letter_between_not_written_and_written_word();
+                let ALL_WORD_WRITTEN_TESTED_AND_FAILED = false;
+                for (let elt of this.find_matching_letter_between_not_written_and_written_word()){
+
+                }
             }
 
             // NOW TRY TO WRITE WORDS [1:]
@@ -88,23 +91,38 @@ export class GridEasy extends BaseGrid {
         return false;
     }
 
-    protected find_matching_letter_between_not_written_and_written_word() {
-        let all_word_written_tested_and_failed = false;
-        while (all_word_written_tested_and_failed === false) {
-            for (let word_written of this.words.written_words()) {
-                for (let word_not_written of this.words.not_written_words()) {
+    protected *find_matching_letter_between_not_written_and_written_word() {
+        // generator used to find letter intersections between word written and not written.
+        // There is not any consideration about grid position or direction.
+        // On each interection a letter is yielded.
+        for (let word_written of this.words.written_words()) {
+            for (let word_not_written of this.words.not_written_words()) {
+                // lets test intersects
+                for (let word_written_letter of word_written.word) {
+                    for (let not_written_word_letter of word_not_written.word) {
+                        if (not_written_word_letter === word_written_letter) {
+                            let common_letter: string = not_written_word_letter;
+                            // LETTER INTERSECTION DETECTED
+                            yield not_written_word_letter;
+                            // TODO: TO RETURN:
+                            // WordWritten / WordNotWritten / CommonLetter
+                            // TODO: Define an interface of objects to return (JSON?).
+
+                        }
+                    }
 
                 }
-
-
-
-
-
-
-
-
             }
         }
+    }
+
+
+    protected testing_word_for_write() {
+        // method used to test word for write
+        // It is called when a letter intersection is found, 
+        // disregarding any consideration about grid positions.
+        // Now positions will be taken in consideration.
+
     }
 
 }
